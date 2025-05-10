@@ -1,4 +1,4 @@
-package Objects;
+package Main;
 
 public class User {
 

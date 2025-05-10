@@ -2,7 +2,7 @@
 package View;
 
 import Controller.UserService;
-import Objects.User;
+import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;

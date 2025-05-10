@@ -2,8 +2,8 @@
 package View;
 
 import Controller.UserService;
-import Objects.LoggedInUser;
-import Objects.User;
+import Main.LoggedInUser;
+import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

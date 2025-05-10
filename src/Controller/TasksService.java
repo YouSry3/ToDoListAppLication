@@ -6,8 +6,8 @@ package Controller;
 
 
 import Model.DatabaseConnection;
-import Objects.Task;
-import Objects.User;
+import Main.Task;
+import Main.User;
 import View.Login;
 import java.util.ArrayList;
 import java.util.List;

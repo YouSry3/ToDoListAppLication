@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.DatabaseConnection;
-import Objects.User;
+import Main.User;
 import View.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

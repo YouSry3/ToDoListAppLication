@@ -5,7 +5,7 @@
 package View;
 
 import Controller.TasksService;
-import Objects.Task;
+import Main.Task;
 import java.awt.Dimension;
 import java.sql.*;
 import java.util.List;

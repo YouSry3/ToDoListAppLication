@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Objects.User;
+import Main.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
