@@ -5,6 +5,7 @@
 package View;
 
 import Controller.TasksService;
+import Controller.UserService;
 import Main.Task;
 import java.awt.Dimension;
 import java.sql.*;
@@ -24,8 +25,10 @@ public class Homepage extends javax.swing.JFrame {
      */
     List<Task> tasks;
     DefaultTableModel model;
+    public int ID;
     
     public Homepage(int userId ,String Email) {
+        ID = userId;
         initComponents();
   WelcomeUser.setText("Welcome " + Email);
 
@@ -50,7 +53,8 @@ public class Homepage extends javax.swing.JFrame {
         Object[] row = {
             task.id,
             task.title,
-            task.description
+            task.description,
+            task.status
         };
         model.addRow(row);
     }
@@ -84,6 +88,8 @@ public class Homepage extends javax.swing.JFrame {
         DescraptionInput = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         updateButton1 = new javax.swing.JButton();
+        LogOutBTN = new javax.swing.JButton();
+        FinshedTask = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -194,6 +200,15 @@ public class Homepage extends javax.swing.JFrame {
             }
         });
 
+        LogOutBTN.setBackground(new java.awt.Color(204, 51, 0));
+        LogOutBTN.setForeground(new java.awt.Color(255, 255, 255));
+        LogOutBTN.setText("LogOut");
+        LogOutBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogOutBTNActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -213,9 +228,7 @@ public class Homepage extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(104, 104, 104))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TitleInput, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(137, 137, 137))
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -225,9 +238,11 @@ public class Homepage extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                         .addComponent(WelcomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LogOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(DescraptionInput, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -242,10 +257,11 @@ public class Homepage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DescraptionInput, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(WelcomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(WelcomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LogOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,16 +276,25 @@ public class Homepage extends javax.swing.JFrame {
                 .addGap(42, 42, 42))
         );
 
+        FinshedTask.setBackground(new java.awt.Color(102, 0, 102));
+        FinshedTask.setForeground(new java.awt.Color(255, 255, 255));
+        FinshedTask.setText("End Task");
+        FinshedTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinshedTaskActionPerformed(evt);
+            }
+        });
+
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Task", "Desc"
+                "Id", "Task", "Desc", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -287,18 +312,26 @@ public class Homepage extends javax.swing.JFrame {
             Table.getColumnModel().getColumn(0).setResizable(false);
             Table.getColumnModel().getColumn(1).setResizable(false);
             Table.getColumnModel().getColumn(2).setResizable(false);
+            Table.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE))
-                .addGap(28, 28, 28))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(FinshedTask, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +340,9 @@ public class Homepage extends javax.swing.JFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(FinshedTask, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Home", jPanel1);
@@ -705,13 +740,12 @@ public class Homepage extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private final String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=ASW;integratedSecurity=true;";
     
     
     
@@ -778,6 +812,7 @@ if (TasksService.addTaskToDatabase(newTask)) {
 
     // إضافة المهمة الجديدة للجدول مباشرةً
     LoadNewTaskToTable(newTask);
+    loadTasksForCurrentUser();
     
 
     ClearAllInput();  // تفريغ الحقول بعد الإضافة
@@ -791,7 +826,7 @@ if (TasksService.addTaskToDatabase(newTask)) {
         DescraptionInput.setText("");
     }
     private void LoadNewTaskToTable(Task newTask){
-        model.addRow(new Object[]{newTask.id,newTask.title,newTask.description});
+        model.addRow(new Object[]{newTask.id,newTask.title,newTask.description,newTask.status});
     }
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
              int selectedRow = Table.getSelectedRow();
@@ -812,6 +847,7 @@ if (TasksService.addTaskToDatabase(newTask)) {
             // تحديث الجدول في الواجهة
             model.setValueAt(updatedTitle, selectedRow, 1);
             model.setValueAt(updatedDescription, selectedRow, 2);
+            loadTasksForCurrentUser();
             JOptionPane.showMessageDialog(this, "✅ Task updated successfully.");
         } else {
             JOptionPane.showMessageDialog(this, "❌ Failed to update task.");
@@ -859,6 +895,61 @@ int selectedRow = Table.getSelectedRow();
 
            ReturnvalueAtFiled(selectedRow);
     }//GEN-LAST:event_updateButton1ActionPerformed
+
+    private void FinshedTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinshedTaskActionPerformed
+        int selectedRow = Table.getSelectedRow(); // الحصول على رقم الصف المحدد
+
+    if (selectedRow != -1) {
+        // الحصول على قيمة الـ id من الصف المحدد، العمود الأول في الجدول (مثلاً 0) هو الـ id
+        int taskId = (int) Table.getValueAt(selectedRow, 0); // هنا "0" هو رقم العمود الذي يحتوي على الـ id
+        TasksService.markTaskAsComplete(taskId); // استدعاء الدالة لتحديث الحالة
+
+        // عرض رسالة تأكيد
+        JOptionPane.showMessageDialog(this, "Done Update Status Task");
+
+        // لو عندك دالة لــ تحميل البيانات مرة تانية بعد التحديث
+        loadTasksForCurrentUser(); 
+    } else {
+        JOptionPane.showMessageDialog(this, "Error of Udate Status Task");
+    }
+    }//GEN-LAST:event_FinshedTaskActionPerformed
+
+    private void LogOutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutBTNActionPerformed
+
+                Login Frame = new Login();  
+                Frame.setVisible(true);
+                Frame.setLocationRelativeTo(null);
+
+                this.dispose();
+
+    }//GEN-LAST:event_LogOutBTNActionPerformed
+    
+    public void loadTasksForCurrentUser() {
+    // تأكد أنك عامل اتصال بقاعدة البيانات وتحديد المستخدم الحالي
+    int currentUserId = ID;  
+    List<Task> tasksList = TasksService.getTasksByUserId(currentUserId); 
+
+    // تحضير بيانات الجدول
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID");
+    model.addColumn("Title");
+    model.addColumn("Description");
+    model.addColumn("Status");
+
+    // إضافة كل تاسك للجدول
+    for (Task task : tasksList) {
+        model.addRow(new Object[] {
+            task.id, 
+            task.title, 
+            task.description, 
+            task.status // عرض الـ status
+        });
+    }
+
+    // تحديث الـ JTable
+    Table.setModel(model);
+}
+
     private void ReturnvalueAtFiled(int selectItem){
             
                 String title = model.getValueAt(selectItem, 1).toString(); // العمود 1: العنوان
@@ -906,6 +997,8 @@ int selectedRow = Table.getSelectedRow();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DescraptionInput;
     private javax.swing.JTextField EmailInput;
+    private javax.swing.JButton FinshedTask;
+    private javax.swing.JButton LogOutBTN;
     private javax.swing.JPasswordField PasswordInput;
     private javax.swing.JButton SigUpUser;
     private javax.swing.JTable Table;

@@ -7,13 +7,23 @@ package Main;
 /**
  *
  * @author Lenovo
- */
+ */ 
 public class Task {
     public int id;
     public String title;
     public String description;
     public int userId;
-   public Task(int id, String title, String description, int userId) {
+    public String status; // أضف السطر ده
+
+    // Constructor مع كل القيم
+    public Task(int id, String title, String description, int userId, String status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.userId = userId;
+        this.status = status;
+    }
+        public Task(int id, String title, String description, int userId) {
         this.id = id;
         this.title = title;
         this.description = description;

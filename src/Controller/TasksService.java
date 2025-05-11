@@ -24,6 +24,7 @@ import java.sql.Statement;
  */
 public class TasksService {
     
+    
    public static boolean addTaskToDatabase(Task task) {
     // تعديل الاستعلام لتمكين الحصول على الـ ID المولد تلقائيًا
     String query = "INSERT INTO tasks (title, description, user_id) VALUES (?, ?, ?)";
@@ -57,7 +58,7 @@ public class TasksService {
     return false; // في حالة فشل إضافة المهمة
 }
 
-    public static List<Task> getTasksByUserId(int userId) {
+public static List<Task> getTasksByUserId(int userId) {
     List<Task> tasks = new ArrayList<>();
     String query = "SELECT * FROM tasks WHERE user_id = ?";
 
@@ -72,7 +73,8 @@ public class TasksService {
                 rs.getInt("id"),
                 rs.getString("title"),
                 rs.getString("description"),
-                rs.getInt("user_id")
+                rs.getInt("user_id"),
+                rs.getString("status") // ✅ جلب الحالة من قاعدة البيانات
             );
             tasks.add(task);
         }
@@ -82,6 +84,28 @@ public class TasksService {
 
     return tasks;
 }
+public static void markTaskAsComplete(int taskId) {
+    String query = "UPDATE tasks SET status = 'complete' WHERE id = ?";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setInt(1, taskId);
+        int rowsUpdated = stmt.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            System.out.println("✅ Task marked as complete.");
+        } else {
+            System.out.println("⚠️ No task found with the given ID.");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("❌ Error updating task status: " + e.getMessage());
+    }
+}
+
+
+    
     public static boolean updateTaskInDatabase(Task task) {
     String query = "UPDATE tasks SET title = ?, description = ? WHERE id = ?";
 
