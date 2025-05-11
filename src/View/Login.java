@@ -1,7 +1,7 @@
 
 package View;
 
-import Controller.UserService;
+import Controller.UsersService;
 import Main.LoggedInUser;
 import Main.User;
 import java.awt.BorderLayout;
@@ -278,11 +278,11 @@ public class Login extends javax.swing.JFrame {
     
 
     // 3. التحقق من صحة البيانات من قاعدة البيانات
-    if (UserService.Login(LogUser)) {
+    if (UsersService.Login(LogUser)) {
         JOptionPane.showMessageDialog(this, "✅ Login successful!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
 
         // 4. فتح الصفحة الرئيسية بعد تسجيل الدخول
-        LoggedInUser.id = UserService.getUserIdByEmail(email);
+        LoggedInUser.id = UsersService.getUserIdByEmail(email);
         LoggedInUser.email = email;
         
         
@@ -290,7 +290,8 @@ public class Login extends javax.swing.JFrame {
         Homepage home = new Homepage(LoggedInUser.id,LoggedInUser.email);  // غير الاسم حسب اسم صفحتك
         home.setVisible(true);
         home.setLocationRelativeTo(null);
-
+        clearAllInput();
+        
         // 5. إغلاق صفحة تسجيل الدخول
         this.dispose();
 
@@ -307,7 +308,7 @@ public class Login extends javax.swing.JFrame {
   String email = EmailInput.getText().trim();  // تأكد أن هذا هو الحقل الذي يحتوي على البريد الإلكتروني
 
     // التحقق من وجود البريد الإلكتروني في قاعدة البيانات
-    if (UserService.isEmailExist(email)) {
+    if (UsersService.isEmailExist(email)) {
         // إذا كان البريد الإلكتروني موجودًا في قاعدة البيانات، افتح صفحة تغيير كلمة المرور
         ForgetPassword forgetpass = new ForgetPassword(email);
         forgetpass.setVisible(true);  // إظهار صفحة تغيير كلمة المرور

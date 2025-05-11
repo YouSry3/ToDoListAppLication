@@ -4,7 +4,7 @@
  */
 package View;
 
-import Controller.UserService;
+import Controller.UsersService;
 import javax.swing.JOptionPane;
 
 /**
@@ -157,7 +157,7 @@ public class ForgetPassword extends javax.swing.JFrame {
     
     // إذا كانت المدخلات صحيحة، نقوم بتحديث كلمة المرور في قاعدة البيانات
         System.out.println("Email this to udate "+Email);
-    if (UserService.updatePassword(Email, pass)) {
+    if (UsersService.updatePassword(Email, pass)) {
         JOptionPane.showMessageDialog(this, "✅ Password updated successfully.", "Password Changed", JOptionPane.INFORMATION_MESSAGE);
 //        i wnat here close page ForgetPassword after success changes 
                     this.dispose();  // يقفل الفورم الحالية

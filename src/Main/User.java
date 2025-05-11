@@ -10,7 +10,7 @@ public class User {
     private String phoneNumber;
     private String gender;
 
-    // Constructor
+    // Constructor Rigster 
     public User(String username, String email, String password,
                 String fullName, String age, String gender, String phoneNumber) {
         this.username = username;

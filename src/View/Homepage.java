@@ -5,7 +5,7 @@
 package View;
 
 import Controller.TasksService;
-import Controller.UserService;
+import Controller.UsersService;
 import Main.Task;
 import java.awt.Dimension;
 import java.sql.*;
@@ -803,8 +803,7 @@ if (title.isEmpty()) {
     return;
 }
 
-int userId = 11;  // افتراضياً (غيّره حسب المستخدم اللي عامل تسجيل دخول)
-
+  int userId = ID;  
 Task newTask = new Task(title, description, userId);
 
 if (TasksService.addTaskToDatabase(newTask)) {
@@ -858,7 +857,7 @@ if (TasksService.addTaskToDatabase(newTask)) {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-int selectedRow = Table.getSelectedRow();
+        int selectedRow = Table.getSelectedRow();
 
     // التأكد من أن هناك صف تم تحديده
     if (selectedRow != -1) {
@@ -870,6 +869,8 @@ int selectedRow = Table.getSelectedRow();
             // إزالة الصف من الجدول بعد الحذف
             model.removeRow(selectedRow);
             JOptionPane.showMessageDialog(this, "✅ Task deleted successfully.");
+            loadTasksForCurrentUser();
+            
         } else {
             JOptionPane.showMessageDialog(this, "❌ Failed to delete task.");
         }

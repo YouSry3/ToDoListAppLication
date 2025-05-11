@@ -1,7 +1,7 @@
 
 package View;
 
-import Controller.UserService;
+import Controller.UsersService;
 import Main.User;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -374,7 +374,7 @@ if (fullName.isEmpty() || fullName.length() < 3) {
     // إنشاء مستخدم جديد وإرساله للتسجيل
     User newUser = new User(userName, email, password,
             fullName, age,gender, phoneNumber);
-    UserService.registerUser(newUser);
+    UsersService.registerUser(newUser);
     ClearAllInput();
 }
 

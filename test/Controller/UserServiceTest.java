@@ -45,7 +45,7 @@ public void testGetUserIdByEmail() {
     System.out.println("getUserIdByEmail");
     String email = "test@example.com";
     int expResult = 19;  // الـ id المتوقع للمستخدم
-    int result = UserService.getUserIdByEmail(email);
+    int result = UsersService.getUserIdByEmail(email);
     assertEquals("User ID should be 19", expResult, result);
 }
 
@@ -71,7 +71,7 @@ public void testUpdatePassword() {
     String email = "test@example.com";  
     String newPassword = "2_newPassword123";
     boolean expResult = true;  
-    boolean result = UserService.updatePassword(email, newPassword);
+    boolean result = UsersService.updatePassword(email, newPassword);
     assertEquals(expResult, result);  
 }
 
@@ -80,7 +80,7 @@ public void testIsEmailExist() {
     System.out.println("isEmailExist");
     String email = "test@example.com";  
     boolean expResult = true;  
-    boolean result = UserService.isEmailExist(email);
+    boolean result = UsersService.isEmailExist(email);
     assertEquals(expResult, result);
 }
 
@@ -90,7 +90,7 @@ public void testIsEmailExist() {
 public void testFullNameAfterLogin() {
     System.out.println("FullNameAfterLogin");
     String fullname = "Test User";  
-    UserService.FullNameAfterLogin(fullname);
+    UsersService.FullNameAfterLogin(fullname);
    }
 
     

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 
-public class UserService {
+public class UsersService {
 
 public static int getUserIdByEmail(String email) {
     String query = "SELECT id FROM users WHERE email = ?";
@@ -54,25 +54,25 @@ public static void registerUser(User newUser) {
            String query = "INSERT INTO users (username, email, password, fullName, age, phoneNumber, gender) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection(); // الحصول على الاتصال بقاعدة البيانات
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query)
+                ) {
 
             // تعيين القيم للأعمدة في الاستعلام
-            stmt.setString(1, newUser.getUsername());  // تعيين قيمة username
-            stmt.setString(2, newUser.getEmail());     // تعيين قيمة email
-            stmt.setString(3, newUser.getPassword());  // تعيين قيمة password
-            stmt.setString(4, newUser.getFullName());  // تعيين قيمة fullName
-            stmt.setString(5, newUser.getAge());      // تعيين قيمة age
-            stmt.setString(6, newUser.getPhoneNumber());  // تعيين قيمة phoneNumber
-            stmt.setString(7, newUser.getGender());   // تعيين قيمة gender
+            stmt.setString(1, newUser.getUsername());  // username
+            stmt.setString(2, newUser.getEmail());     // email
+            stmt.setString(3, newUser.getPassword());  // password
+            stmt.setString(4, newUser.getFullName());  // fullName
+            stmt.setString(5, newUser.getAge());      // age
+            stmt.setString(6, newUser.getPhoneNumber());  // phoneNumber
+            stmt.setString(7, newUser.getGender());   //  gender
+            
 
-            // تنفيذ الاستعلام
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("✅ User registered successfully.");
             }
 
         } catch (SQLException e) {
-            // إذا حدث خطأ أثناء تنفيذ الاستعلام
             System.out.println("❌ Error registering user: " + e.getMessage());
         }
 }
@@ -131,6 +131,7 @@ public static boolean Login(User LoginUser) {
             stmt.setString(1, LoginUser.getEmail());
             stmt.setString(2, LoginUser.getPassword());
 
+            
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     FullNameAfterLogin(rs.getString("username"));
